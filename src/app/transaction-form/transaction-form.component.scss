@@ -1,0 +1,41 @@
+@import "../../variables.scss";
+
+.transaction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+
+    > label {
+      color: $hot-red;
+      font-size: $font-size-label;
+    }
+
+    > input,
+    textarea {
+      border: 1px solid $orange-red;
+      border-radius: $border-radius-default;
+      color: $hot-red;
+      padding: $spacing-small-half $spacing-small;
+      margin: $spacing-small-half 0px;
+      font-size: $font-size-text;
+    }
+
+    > button {
+      margin-top: $spacing-medium;
+    }
+  }
+}
+
+.transactionNav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  gap: $spacing-medium;
+}

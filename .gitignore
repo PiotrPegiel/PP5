@@ -40,3 +40,16 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# txt
+folderStructure.txt
+
+# Log files
+*.log
+
+# Environment files
+.env
+
+# Build artifacts
+/build
+/dist

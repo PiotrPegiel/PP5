@@ -1,0 +1,64 @@
+@import "../../variables.scss";
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+
+    > label {
+      color: $hot-red;
+      font-size: $font-size-label;
+    }
+
+    > input {
+      border: 1px solid $orange-red;
+      border-radius: $border-radius-default;
+      color: $hot-red;
+      padding: $spacing-small-half $spacing-small;
+      margin: $spacing-small-half 0px;
+      font-size: $font-size-text;
+    }
+
+    > button {
+      border: none;
+      background: color-mix(in srgb, $orange-red 5%, transparent);
+      color: $orange-red;
+      padding-inline: 0.75rem;
+      padding-block: 0.375rem;
+      border-radius: 2.75rem;
+      border: 0;
+      transition: background 0.3s ease;
+      font-family: var(--inter-font);
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.4rem;
+      letter-spacing: -0.00875rem;
+      text-decoration: none;
+      margin-top: $spacing-medium-half;
+    }
+
+    > button:hover {
+      background: color-mix(in srgb, $orange-red 15%, transparent);
+      cursor: pointer;
+    }
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: $spacing-medium-half;
+    a {
+      cursor: pointer;
+      color: $bright-blue;
+      //text-decoration: underline;
+    }
+  }
+}

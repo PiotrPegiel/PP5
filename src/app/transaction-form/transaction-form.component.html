@@ -1,0 +1,36 @@
+<div class="transaction">
+  <div class="transactionNav">
+    <a
+      class="buttonDefault buttonOrangeRed"
+      (click)="navigateToDashboard()"
+      role="button"
+      tabindex="0"
+      >Back</a
+    >
+  </div>
+  <span class="pageTitle">{{
+    transactionType === "debit" ? "Add Debit" : "Add Credit"
+  }}</span>
+  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+    <label for="amount">Amount</label>
+    <input
+      id="amount"
+      formControlName="amount"
+      type="number"
+      required
+      aria-label="Amount"
+    />
+
+    <label for="description">Description</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      rows="2"
+      required
+      aria-label="Description"
+    ></textarea>
+    <button class="buttonDefault buttonElectricViolet" type="submit">
+      Add
+    </button>
+  </form>
+</div>

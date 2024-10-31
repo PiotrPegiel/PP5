@@ -1,0 +1,46 @@
+@import "../../variables.scss";
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+
+    > label {
+      color: $hot-red;
+      font-size: $font-size-label;
+    }
+
+    > input {
+      border: 1px solid $orange-red;
+      border-radius: $border-radius-default;
+      color: $hot-red;
+      padding: $spacing-small-half $spacing-small;
+      margin: $spacing-small-half 0px;
+      font-size: $font-size-text;
+      transition: 0.3s;
+    }
+
+    > input:disabled {
+      color: $gray-900;
+      background: color-mix(in srgb, $gray-700 15%, transparent);
+    }
+
+    > a {
+      margin-top: $spacing-medium;
+    }
+  }
+}
+
+.userNav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  gap: $spacing-medium;
+}

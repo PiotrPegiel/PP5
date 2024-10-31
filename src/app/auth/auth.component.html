@@ -1,0 +1,33 @@
+<div class="auth">
+  <span class="pageTitle">{{ isRegistering ? "Register" : "Login" }}</span>
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <label for="login">Login</label>
+    <input
+      id="login"
+      formControlName="login"
+      type="text"
+      required
+      aria-label="Login"
+    />
+
+    <label for="password">Password</label>
+    <input
+      id="password"
+      formControlName="password"
+      type="password"
+      required
+      aria-label="Password"
+    />
+
+    <button type="submit">{{ isRegistering ? "Register" : "Login" }}</button>
+  </form>
+  <div>
+    <span>{{
+      isRegistering ? "Already have an account?" : "Need an account?"
+    }}</span>
+    <span
+      >{{ isRegistering ? "Login " : "Register " }}
+      <a (click)="toggleMode()" tabindex="0">here</a>
+    </span>
+  </div>
+</div>

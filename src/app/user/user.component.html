@@ -1,0 +1,36 @@
+<div class="user">
+  <div class="userNav">
+    <a
+      class="buttonDefault buttonOrangeRed"
+      (click)="navigateToDashboard()"
+      tabindex="0"
+      >Back</a
+    >
+  </div>
+  <span class="pageTitle">User Profile</span>
+  <form [formGroup]="userForm">
+    <label for="login">Login</label>
+    <input
+      id="login"
+      formControlName="login"
+      [readonly]="!isEditing"
+      aria-label="Login"
+    />
+
+    <label for="password">Password</label>
+    <input
+      id="password"
+      formControlName="password"
+      type="password"
+      [readonly]="!isEditing"
+      aria-label="Password"
+    />
+
+    <a
+      class="buttonDefault buttonBrightBlue"
+      (click)="toggleEdit()"
+      tabindex="0"
+      >{{ isEditing ? "Save" : "Edit" }}</a
+    >
+  </form>
+</div>
