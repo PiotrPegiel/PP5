@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run server": "node server.js"
+    "run server": "node server.js",
+    "format": "prettier --write \"**/*.{js,json}\"",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -15,5 +17,9 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "eslint": "^9.15.0",
+    "prettier": "^3.3.3"
   }
 }

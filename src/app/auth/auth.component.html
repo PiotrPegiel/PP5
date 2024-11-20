@@ -1,5 +1,5 @@
 <div class="auth">
-  <span class="pageTitle">{{ isRegistering ? "Register" : "Login" }}</span>
+  <span class="pageTitle">{{ isRegistering ? 'Register' : 'Login' }}</span>
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
     <label for="login">Login</label>
     <input
@@ -19,15 +19,17 @@
       aria-label="Password"
     />
 
-    <button type="submit">{{ isRegistering ? "Register" : "Login" }}</button>
+    <button type="submit">{{ isRegistering ? 'Register' : 'Login' }}</button>
   </form>
   <div>
     <span>{{
-      isRegistering ? "Already have an account?" : "Need an account?"
+      isRegistering ? 'Already have an account?' : 'Need an account?'
     }}</span>
-    <span
-      >{{ isRegistering ? "Login " : "Register " }}
-      <a (click)="toggleMode()" tabindex="0">here</a>
+    <span>
+      {{ isRegistering ? 'Login ' : 'Register ' }}
+      <a (click)="toggleMode()" (keydown)="handleKeydown($event)" tabindex="0"
+        >here</a
+      >
     </span>
   </div>
 </div>

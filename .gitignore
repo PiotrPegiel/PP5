@@ -53,3 +53,6 @@ folderStructure.txt
 # Build artifacts
 /build
 /dist
+
+#backend
+backend/node_modules

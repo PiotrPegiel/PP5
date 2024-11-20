@@ -1,4 +1,45 @@
 {
   "users": [
+    {
+      "login": "1",
+      "password": "1",
+      "transactions": [
+        {
+          "amount": 10,
+          "description": "1",
+          "type": "debit",
+          "date": "2024-11-20T16:41:00.755Z"
+        },
+        {
+          "amount": 1,
+          "description": "1",
+          "type": "debit",
+          "date": "2024-11-20T16:42:01.025Z"
+        },
+        {
+          "amount": 1,
+          "description": "test",
+          "type": "debit",
+          "date": "2024-11-20T16:42:22.903Z"
+        },
+        {
+          "amount": 1,
+          "description": "test2",
+          "type": "credit",
+          "date": "2024-11-20T16:42:35.166Z"
+        },
+        {
+          "amount": 1,
+          "description": "1",
+          "type": "debit",
+          "date": "2024-11-20T17:08:51.682Z"
+        }
+      ]
+    },
+    {
+      "login": "2",
+      "password": "2",
+      "transactions": []
+    }
   ]
 }

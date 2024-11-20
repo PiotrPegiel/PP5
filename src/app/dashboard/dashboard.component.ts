@@ -1,10 +1,28 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Renderer2,
+  HostListener,
+} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DataService } from '../data.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { HostListener } from '@angular/core';
+
+interface Transaction {
+  date: string | Date;
+  amount: number;
+  description: string;
+  type: 'credit' | 'debit'; // Corrected type definition
+}
+
+interface User {
+  login: string;
+  password: string;
+  transactions: Transaction[];
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -17,9 +35,9 @@ import { HostListener } from '@angular/core';
   providers: [DatePipe],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  transactions: any[] = [];
-  balance: number = 0;
-  currentUser: any;
+  transactions: Transaction[] = [];
+  balance = 0;
+  currentUser!: User;
   private transactionsSubscription!: Subscription;
   private globalClickListener!: () => void;
 
@@ -27,7 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private router: Router,
     private datePipe: DatePipe,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {
     // Subscribe to router events to reload transactions on navigation
     this.router.events
@@ -40,15 +58,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadTransactions();
     this.transactionsSubscription = this.dataService.transactions$.subscribe(
-      (transactions) => {
+      (transactions: Transaction[]) => {
         this.transactions = transactions.sort(
-          (a: any, b: any) =>
-            new Date(b.date).getTime() - new Date(a.date).getTime()
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
         );
         this.calculateBalance();
-      }
+      },
     );
-    this.currentUser = this.dataService.getCurrentUser();
+    this.currentUser = this.dataService.getCurrentUser() as User;
   }
 
   ngOnDestroy(): void {
@@ -61,11 +78,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadTransactions(): void {
-    const user = this.dataService.getCurrentUser();
+    const user = this.dataService.getCurrentUser() as User;
     if (user) {
       this.transactions = user.transactions.sort(
-        (a: any, b: any) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
       );
       this.calculateBalance();
     } else {
@@ -94,7 +110,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/user']);
   }
 
-  deleteTransaction(transaction: any): void {
+  deleteTransaction(transaction: Transaction): void {
     this.dataService.deleteTransaction(transaction).subscribe(() => {
       this.loadTransactions();
     });

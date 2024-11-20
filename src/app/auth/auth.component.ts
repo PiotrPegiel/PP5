@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../data.service';
-import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-auth',
@@ -22,7 +21,7 @@ export class AuthComponent implements OnInit {
     private fb: FormBuilder,
     private dataService: DataService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +64,7 @@ export class AuthComponent implements OnInit {
       });
     }
   }
+
   @HostListener('keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {

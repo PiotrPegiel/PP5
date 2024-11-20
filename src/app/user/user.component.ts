@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -22,7 +21,7 @@ export class UserComponent implements OnInit {
     private fb: FormBuilder,
     private dataService: DataService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {

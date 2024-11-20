@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-transaction-form',
@@ -23,7 +22,7 @@ export class TransactionFormComponent implements OnInit {
     private dataService: DataService,
     private router: Router,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

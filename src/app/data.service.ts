@@ -1,7 +1,20 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+
+interface User {
+  login: string;
+  password: string;
+  transactions: Transaction[];
+}
+
+interface Transaction {
+  date: string | Date;
+  amount: number;
+  description: string;
+  type: 'credit' | 'debit';
+}
 
 @Injectable({
   providedIn: 'root',
@@ -10,23 +23,24 @@ export class DataService {
   private apiUrl = 'http://localhost:3000/data';
   private addTransactionUrl = 'http://localhost:3000/add-transaction';
   private deleteTransactionUrl = 'http://localhost:3000/delete-transaction';
-  private currentUser: any = null;
-  private transactionsSubject: BehaviorSubject<any[]> = new BehaviorSubject<
-    any[]
-  >([]);
+  private currentUser: User | null = null;
+  private transactionsSubject: BehaviorSubject<Transaction[]> =
+    new BehaviorSubject<Transaction[]>([]);
   public transactions$ = this.transactionsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  private loadUsers(): Observable<any> {
-    return this.http.get<any>(this.apiUrl).pipe(map((data) => data.users));
+  private loadUsers(): Observable<User[]> {
+    return this.http
+      .get<{ users: User[] }>(this.apiUrl)
+      .pipe(map((data) => data.users));
   }
 
   login(login: string, password: string): Observable<boolean> {
     return this.loadUsers().pipe(
       map((users) => {
         const user = users.find(
-          (u: any) => u.login === login && u.password === password
+          (u) => u.login === login && u.password === password,
         );
         if (user) {
           this.currentUser = user;
@@ -34,24 +48,24 @@ export class DataService {
           return true;
         }
         return false;
-      })
+      }),
     );
   }
 
   register(login: string, password: string): Observable<boolean> {
     return this.loadUsers().pipe(
       switchMap((users) => {
-        if (users.find((u: any) => u.login === login)) {
+        if (users.find((u) => u.login === login)) {
           return of(false); // User already exists
         }
-        const newUser = { login, password, transactions: [] };
+        const newUser: User = { login, password, transactions: [] };
         users.push(newUser);
         return this.saveUsers(users).pipe(map(() => true));
-      })
+      }),
     );
   }
 
-  getCurrentUser(): any {
+  getCurrentUser(): User | null {
     return this.currentUser;
   }
 
@@ -59,55 +73,54 @@ export class DataService {
     this.currentUser = null;
   }
 
-  getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getData(): Observable<{ users: User[] }> {
+    return this.http.get<{ users: User[] }>(this.apiUrl);
   }
 
-  addTransaction(transaction: any): Observable<void> {
+  addTransaction(transaction: Transaction): Observable<void> {
     if (this.currentUser) {
       return this.http
-        .post<void>(this.addTransactionUrl, {
+        .post(this.addTransactionUrl, {
           login: this.currentUser.login,
           transaction,
         })
         .pipe(
           map(() => {
-            this.currentUser.transactions.push(transaction);
-            this.transactionsSubject.next(this.currentUser.transactions);
-          })
+            this.currentUser!.transactions.push(transaction);
+            this.transactionsSubject.next(this.currentUser!.transactions);
+          }),
         );
     }
     return of();
   }
 
-  deleteTransaction(transaction: any): Observable<void> {
+  deleteTransaction(transaction: Transaction): Observable<void> {
     if (this.currentUser) {
       return this.http
-        .post<void>(this.deleteTransactionUrl, {
+        .post(this.deleteTransactionUrl, {
           login: this.currentUser.login,
           transaction,
         })
         .pipe(
           map(() => {
-            this.currentUser.transactions =
-              this.currentUser.transactions.filter(
-                (t: any) => t !== transaction
-              );
-            this.transactionsSubject.next(this.currentUser.transactions);
-          })
+            this.currentUser!.transactions =
+              this.currentUser!.transactions.filter((t) => t !== transaction);
+            this.transactionsSubject.next(this.currentUser!.transactions);
+          }),
         );
     }
     return of();
   }
 
-  private saveUsers(users?: any[]): Observable<void> {
-    if (!users) {
-      users = [this.currentUser];
-    }
-    return this.http.post<void>(this.apiUrl, { users }).pipe(map(() => {}));
+  private saveUsers(users: User[] = [this.currentUser!]): Observable<void> {
+    return this.http.post(this.apiUrl, { users }).pipe(
+      map(() => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+      }),
+    );
   }
 
-  updateUser(updatedUser: any): Observable<void> {
+  updateUser(updatedUser: User): Observable<void> {
     if (this.currentUser) {
       this.currentUser.login = updatedUser.login;
       this.currentUser.password = updatedUser.password;

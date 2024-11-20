@@ -3,13 +3,14 @@
     <a
       class="buttonDefault buttonOrangeRed"
       (click)="navigateToDashboard()"
+      (keydown)="handleKeydown($event)"
       role="button"
       tabindex="0"
       >Back</a
     >
   </div>
   <span class="pageTitle">{{
-    transactionType === "debit" ? "Add Debit" : "Add Credit"
+    transactionType === 'debit' ? 'Add Debit' : 'Add Credit'
   }}</span>
   <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
     <label for="amount">Amount</label>

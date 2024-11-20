@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   angular-app:
     build:
@@ -8,7 +9,8 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-    command: npm start
+    command: >
+      sh -c "npm run lint && npm run format && npm start"
 
   backend:
     build:
@@ -19,4 +21,5 @@ services:
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
-    command: node server.js
+    command: >
+      sh -c "npm run lint && npm run format && node server.js"

@@ -1,9 +1,19 @@
 <div class="dashboard">
   <div class="dashboardNav">
-    <a (click)="logout()" role="button" tabindex="0">Logout</a>
-    <a (click)="navigateToUser()" role="button" tabindex="0">{{
-      currentUser.login
-    }}</a>
+    <a
+      (click)="logout()"
+      (keydown)="handleKeydown($event)"
+      role="button"
+      tabindex="0"
+      >Logout</a
+    >
+    <a
+      (click)="navigateToUser()"
+      (keydown)="handleKeydown($event)"
+      role="button"
+      tabindex="0"
+      >{{ currentUser.login }}</a
+    >
   </div>
   <span class="pageTitle">Dashboard</span>
   <div class="dashboardContent">
@@ -13,7 +23,7 @@
         class="dashboardBalance"
         [ngClass]="{
           dashboardBalancePlus: balance >= 0,
-          dashboardBalanceMinus: balance < 0
+          dashboardBalanceMinus: balance < 0,
         }"
         aria-live="polite"
         >{{ balance | currency }}</span
@@ -25,6 +35,7 @@
         <a
           class="buttonDefault buttonFrenchViolet"
           (click)="navigateTo('debit')"
+          (keydown)="handleKeydown($event)"
           role="button"
           tabindex="0"
           >Add Debit</a
@@ -32,6 +43,7 @@
         <a
           class="buttonDefault buttonElectricViolet"
           (click)="navigateTo('credit')"
+          (keydown)="handleKeydown($event)"
           role="button"
           tabindex="0"
           >Add Credit</a
@@ -43,7 +55,7 @@
           *ngFor="let transaction of transactions"
           [ngClass]="{
             dashboardHistoryPlus: transaction.type === 'debit',
-            dashboardHistoryMinus: transaction.type === 'credit'
+            dashboardHistoryMinus: transaction.type === 'credit',
           }"
         >
           <div>
@@ -51,19 +63,20 @@
               <span
                 [ngClass]="{
                   dashboardBalancePlus: transaction.type === 'debit',
-                  dashboardBalanceMinus: transaction.type === 'credit'
+                  dashboardBalanceMinus: transaction.type === 'credit',
                 }"
                 >{{ transaction.amount | currency }}</span
               >
               <div>
-                <span>{{ formatDate(transaction.date, "dd/MM/yyyy") }}</span>
-                <span>{{ formatDate(transaction.date, "HH:mm") }}</span>
+                <span>{{ formatDate(transaction.date, 'dd/MM/yyyy') }}</span>
+                <span>{{ formatDate(transaction.date, 'HH:mm') }}</span>
               </div>
             </div>
             <span>{{ transaction.description }}</span>
           </div>
           <button
             (click)="deleteTransaction(transaction)"
+            (keydown)="handleKeydown($event)"
             aria-label="Delete transaction"
           >
             🗑️

@@ -3,6 +3,7 @@
     <a
       class="buttonDefault buttonOrangeRed"
       (click)="navigateToDashboard()"
+      (keydown)="handleKeydown($event)"
       tabindex="0"
       >Back</a
     >
@@ -29,8 +30,9 @@
     <a
       class="buttonDefault buttonBrightBlue"
       (click)="toggleEdit()"
+      (keydown)="handleKeydown($event)"
       tabindex="0"
-      >{{ isEditing ? "Save" : "Edit" }}</a
+      >{{ isEditing ? 'Save' : 'Edit' }}</a
     >
   </form>
 </div>
